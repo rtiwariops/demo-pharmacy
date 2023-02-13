@@ -1,0 +1,20 @@
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "guardian": "Jane Doe",
+  "gender": "male",
+  "dob": "19691218",
+  "street1": "123 Main St",
+  "street2": "Apt 4",
+  "city": "Anytown",
+  "state": "CA",
+  "country": "USA",
+  "zip": "12345",
+  "phone": "555-123-4567",
+  "email": "johndoe@example.com",
+  "language_preference": "English",
+  "species": "Human",
+  "viewed_notice_of_privacy_practices": true,
+  "viewed_notice_of_privacy_practices_date": "20230213"
+}
+
