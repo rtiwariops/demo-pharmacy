@@ -7,7 +7,7 @@
   "street1": "123 Main St",
   "street2": "Apt 4",
   "city": "Anytown",
-  "state": "CA",
+  "state": "UT",
   "country": "USA",
   "zip": "12345",
   "phone": "555-123-4567",
@@ -17,4 +17,3 @@
   "viewed_notice_of_privacy_practices": true,
   "viewed_notice_of_privacy_practices_date": "20230213"
 }
-
