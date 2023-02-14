@@ -69,8 +69,8 @@ async def get_all_patients():
 
     # Fetch all the rows and convert them to a list of dictionaries
     rows = cursor.fetchall()
+    patients = []
     for row in rows:
-        patients = []
         patient = Patient(
             id=row[0],
             first_name=row[1],
