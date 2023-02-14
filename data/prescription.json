@@ -21,7 +21,7 @@
   "rx_number": "1144477",
   "origin": "5",
   "prescriber_order_number": "AE1234",
-  "original_prescribed_ndc": null,
+  "original_prescribed_ndc": "None",
   "date_filled_utc": "2020-04-08T11:00:00.000Z",
   "prescribed_quantity_unit": "EA"
 }

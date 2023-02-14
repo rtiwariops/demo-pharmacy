@@ -59,7 +59,8 @@ CREATE TABLE prescriptions (
   prescriber_order_number TEXT,
   original_prescribed_ndc TEXT,
   date_filled_utc TEXT,
-  prescribed_quantity_unit TEXT
+  prescribed_quantity_unit TEXT,
+  price INTEGER
 );
 '''
 cursor.execute(create_table)
@@ -83,16 +84,16 @@ INSERT INTO prescriptions (
   expiration_date_utc, number_of_refills_allowed, prescribed_brand_name, prescribed_drug_strength,
   prescribed_generic_name, prescribed_ndc, prescribed_quantity, prescribed_written_name,
   quantity_remaining, rx_number, origin, prescriber_order_number,
-  original_prescribed_ndc, date_filled_utc, prescribed_quantity_unit
+  original_prescribed_ndc, date_filled_utc, prescribed_quantity_unit, price
 ) VALUES (
-  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
 );
 '''
 data = (
     1, 'Tafluprost', 'Wake up at midnight, take then.', 'Dr. Bruce Banner', '2020-02-05T00:00:00.000Z', 1,
     'On Hold', 1, '90', 1, '2020-04-08T11:00:00.000Z', '2021-03-31T11:00:00.000Z', 3, 'Zioptan',
     '40 mg', 'Tafluprost 40 mg tablet', '555555555555', 90, 'Tafluprost 40 Mg Tablet', 270, '1144477',
-    '5', 'AE1234', 'None', '2020-04-08T11:00:00.000Z', 'EA'
+    '5', 'AE1234', 'None', '2020-04-08T11:00:00.000Z', 'EA', 20
 )
 cursor.execute(insert_data, data)
 

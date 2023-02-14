@@ -66,6 +66,7 @@ class Prescription(BaseModel):
     original_prescribed_ndc: str
     date_filled_utc: str
     prescribed_quantity_unit: str
+    price: int
 
 @app.get("/patients")
 async def get_all_patients():
@@ -263,7 +264,8 @@ async def get_all_prescriptions():
             'prescriber_order_number': row[23],
             'original_prescribed_ndc': row[24],
             'date_filled_utc': row[25],
-            'prescribed_quantity_unit': row[26]
+            'prescribed_quantity_unit': row[26],
+            'price': row[27]
         }
 
         prescriptions.append(Prescription(**prescription))
@@ -342,6 +344,7 @@ async def get_prescriptions_for_patient(patient_id: int):
             'original_prescribed_ndc': prescription_row[24],
             'date_filled_utc': prescription_row[25],
             'prescribed_quantity_unit': prescription_row[26],
+            'price': prescription_row[27]
         }
 
         patient_data['prescriptions'].append(prescription_data)
@@ -390,8 +393,9 @@ async def add_prescription_for_patient(patient_id: int, prescription: dict):
                                     prescriber_order_number,
                                     original_prescribed_ndc,
                                     date_filled_utc,
-                                    prescribed_quantity_unit
-                                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+                                    prescribed_quantity_unit,
+                                    price
+                                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
         c.execute(insert_prescription, (
             patient_id,
             prescription["medication_name"],
@@ -418,7 +422,8 @@ async def add_prescription_for_patient(patient_id: int, prescription: dict):
             prescription["prescriber_order_number"],
             prescription["original_prescribed_ndc"],
             prescription["date_filled_utc"],
-            prescription["prescribed_quantity_unit"]
+            prescription["prescribed_quantity_unit"],
+            prescription["price"]
         ))
         conn.commit()
 
