@@ -2,19 +2,42 @@
 
 import { Box, Typography, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { Link } from "react-router-dom";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
+// import Userpage from "../../components/Userpage";
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      const request = fetch("http://localhost:8000/patients");
+      const response = await request;
+      const parsed = await response.json();
+      setRows(parsed);
+    }
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  console.log(rows);
   const [columns, setColumns] = useState([
-    { field: "id", headerName: "ID" },
-    { field: "first_name", headerName: "First Name" },
+    {
+      field: "id",
+      headerName: "ID",
+    },
+    {
+      field: "first_name",
+      headerName: "First Name",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
     { field: "last_name", headerName: "Last Name" },
     { field: "guardian", headerName: "Guardian" },
     { field: "gender", headerName: "Gender" },
@@ -37,21 +60,17 @@ const Team = () => {
       field: "viewed_notice_of_privacy_practices_date",
       headerName: "Date Notice of Privacy Practices Viewed",
     },
+    {
+      field: "link",
+      headerName: "Link",
+      width: 150,
+      renderCell: (params) => (
+        <Link to={`/users/${params.id}`} style={{ color: "#fff" }}>
+          360 View
+        </Link>
+      ),
+    },
   ]);
-
-  const [rows, setRows] = useState([]);
-
-  useEffect(() => {
-    async function getData() {
-      const request = fetch("http://localhost:8000/patients");
-      const response = await request;
-      const parsed = await response.json();
-      setRows(parsed);
-    }
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  console.log(rows);
 
   //   console.log("Columns:", columns);
   //   console.log("Rows:", rows);
@@ -87,7 +106,11 @@ const Team = () => {
             color: `${colors.greenAccent[200]} !important`,
           },
         }}>
-        <DataGrid rows={rows} columns={columns} />
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          components={{ Toolbar: GridToolbar }}
+        />
       </Box>
     </Box>
   );

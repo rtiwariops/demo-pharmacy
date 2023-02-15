@@ -179,6 +179,55 @@ async def get_patient_by_id(patient_id: int):
         conn.close()
         return patient
     
+# Define a GET endpoint to retrieve a patient by ID
+@app.get("/v2/patients/{patient_id}")
+async def get_patient_by_id(patient_id: int):
+    # Create a connection to the database
+    conn = sqlite3.connect('patients.db')
+    cursor = conn.cursor()
+
+    # Select the row with the specified ID from the patients table
+    select_by_id = 'SELECT * FROM patients WHERE id = ?'
+    cursor.execute(select_by_id, (patient_id,))
+
+    # Fetch the row and convert it to a dictionary
+    row = cursor.fetchone()
+    if row is not None:
+        patient = {
+            'id': row[0],
+            'first_name': row[1],
+            'last_name': row[2],
+            'guardian': row[3],
+            'gender': row[4],
+            'dob': row[5],
+            'street1': row[6],
+            'street2': row[7],
+            'city': row[8],
+            'state': row[9],
+            'country': row[10],
+            'zip': row[11],
+            'phone': row[12],
+            'email': row[13],
+            'language_preference': row[14],
+            'species': row[15],
+            'viewed_notice_of_privacy_practices': bool(row[16]),
+            'viewed_notice_of_privacy_practices_date': row[17],
+            'lab_results': {
+                'medical_history': "High Blood Pressure",
+                'visit': [1,2,3,4],
+                'Lab_Test': ['CBC','Lipids'],
+                'Lab_Results': [{'Cholesterol': 195},{'Creatnine':1.4},
+                    {'Cholesterol': 190},{'Creatnine':1.5},
+                    {'Cholesterol': 185},{'Creatnine':1.6},
+                    {'Cholesterol': 180},{'Creatnine':1.7}],
+                'ICD_Code': 'Z13.220'
+            }
+        }
+
+        # Close the connection and return the patient data
+        conn.close()
+        return patient
+    
 # Define a PUT endpoint to update an existing patient
 @app.put("/patients/{patient_id}")
 async def update_patient(patient_id: int, patient: Patient):
